@@ -3,6 +3,7 @@ package models;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +14,7 @@ public class Game {
     private String name;
     private Genre genre;
     private List<Console> consoles;
+    private List<Owner> favoritedBy;
 
     public Game() {
     }
@@ -20,6 +22,8 @@ public class Game {
     public Game(String name, Genre genre) {
         this.name = name;
         this.genre = genre;
+        this.consoles = new ArrayList<Console>();
+        this.favoritedBy = new ArrayList<Owner>();
     }
 
     @Id
@@ -67,4 +71,20 @@ public class Game {
     public void addConsole(Console console) {
         this.consoles.add(console);
     }
+
+    @OneToMany(mappedBy="favourite", fetch = FetchType.LAZY)
+    public List<Owner> getFavoritedBy() {
+        return favoritedBy;
+    }
+
+    public void setFavoritedBy(List<Owner> favoritedBy) {
+        this.favoritedBy = favoritedBy;
+    }
+
+    public void addOwnerWhoLovesIt(Owner owner) {
+        this.favoritedBy.add(owner);
+    }
+
+
+
 }

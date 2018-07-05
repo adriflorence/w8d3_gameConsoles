@@ -55,7 +55,7 @@ public class Console {
         this.model = model;
     }
 
-    @Column(name="region")
+    @Enumerated(value = EnumType.STRING)
     public Region getRegion() {
         return region;
     }
